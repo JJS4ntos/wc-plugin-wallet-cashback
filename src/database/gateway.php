@@ -109,5 +109,18 @@ function wc_sw_init_gateway_class() {
             }
         }
 
+        public function validate_fields() {
+            global $woocommerce;
+            $total = floatval( preg_replace( '#[^\d.]#', '', $woocommerce->cart->get_cart_total() ) );
+            #$order = wc_get_order($order_id);
+            $user_id = get_current_user_id();
+            $cash = get_user_meta($user_id, SWJJ_CASH_OPTION, true);
+            if( $total > $cash ) {
+                wc_add_notice(  __('Você não possui créditos suficientes para realizar esta compra', 'wc-sw-jj'), 'error' );
+                return false;
+            }
+            return true;
+        }
+
     } 
 }
