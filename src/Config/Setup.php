@@ -84,7 +84,7 @@ class Setup extends Controller{
    * Install all options in database
    */
   public function init() {
-    foreach( OPTIONS as $option => $value) {
+    foreach( SWJJ_OPTIONS as $option => $value) {
       if( get_option($option, null) === null ) {
         update_option($option, $value['default'], false);
       }

@@ -16,7 +16,7 @@ class JJSWConfigurationController extends Controller {
             'hide_empty' => $hide_empty,
         );
         $product_categories = get_terms( 'product_cat', $cat_args );
-        echo $this->generateView('configuration', ['options' => OPTIONS, 'categories' => $product_categories]);
+        echo $this->generateView('configuration', ['options' => SWJJ_OPTIONS, 'categories' => $product_categories]);
     }
 
 }

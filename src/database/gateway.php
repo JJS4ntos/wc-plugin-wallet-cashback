@@ -12,16 +12,19 @@ function wc_sw_init_gateway_class() {
 
         public function __construct() {
             $this->id = 'wc-sw-jj-payment';
-            #$this->icon = '';
+            $this->icon = '';
             $this->has_fields = false;
             $this->method_title = __('Carteira Virtual', 'wc-sw-jj');
             $this->method_description = __('Cria a possibilidade de o usuário comprar produtos específicos usando uma carteira virtual', 'wc-sw-jj');
             $this->supports = array(
-                'products'
+                'products',
             );
             $this->init_form_fields();
             $this->init_settings();
-            
+            $this->title = $this->get_option( 'title' );
+            $this->description = $this->get_option( 'description' );
+            $this->enabled = $this->get_option( 'enabled' );
+            add_action( 'woocommerce_update_options_payment_gateways_' . $this->id, array( $this, 'process_admin_options' ) );
         }
 
         /**

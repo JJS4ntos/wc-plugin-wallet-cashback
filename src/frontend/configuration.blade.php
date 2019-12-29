@@ -25,7 +25,7 @@
                 <input class="jjsw-form-input" type="number" name="{{ $name }}" value="{{ get_option($name) }}" step=".01">
             @elseif( $option['type'] == 'checkbox' )
                 <label><span class="jjsw-checkbox">{{ $option['label'] }}:</span>
-                    <input  type="checkbox" name="{{ $name }}" value="{{ get_option($name) }}"
+                    <input  type="checkbox" name="{{ $name }}" value="1"
                     {{ get_option($name)? 'checked':'' }}>
                 </label>
             @elseif( $option['type'] == 'select' )
