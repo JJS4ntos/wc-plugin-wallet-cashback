@@ -68,20 +68,19 @@ function wc_sw_init_gateway_class() {
 
         public function process_payment( $order_id ) {
             $order = wc_get_order( $order_id );
-            $cash = get_user_meta(get_current_user_id(), SWJJ_CASH_OPTION, true);
-            if( $cash >= $order->get_total() ) {
-                update_user_meta(get_current_user_id(), SWJJ_CASH_OPTION, $cash - $order->get_total(), $cash);
-                $order->update_status( 'processing', __( 'Pagamento via carteira virtual', 'wc-sw-jj' ) );
-                // Reduce stock levels
-                $order->reduce_order_stock();
-                // Remove cart
-                WC()->cart->empty_cart();
-                // Return thankyou redirect
-                return array(
-                    'result'    => 'success',
-                    'redirect'  => $this->get_return_url( $order )
-                );
-            }           
+            $user = $order->get_user();
+            $cash = get_user_meta($user->ID, SWJJ_CASH_OPTION, true);
+            update_user_meta($user->ID, SWJJ_CASH_OPTION, $cash - $order->get_total(), $cash);
+            $order->update_status( 'processing', __( 'Pagamento via carteira virtual', 'wc-sw-jj' ) );
+            // Reduce stock levels
+            $order->reduce_order_stock();
+            // Remove cart
+            WC()->cart->empty_cart();
+            // Return thankyou redirect
+            return array(
+                'result'    => 'success',
+                'redirect'  => $this->get_return_url( $order )
+            );
         }
 
         /**
@@ -111,8 +110,7 @@ function wc_sw_init_gateway_class() {
 
         public function validate_fields() {
             global $woocommerce;
-            $total = floatval( preg_replace( '#[^\d.]#', '', $woocommerce->cart->get_cart_total() ) );
-            #$order = wc_get_order($order_id);
+            $total = WC()->cart->total;
             $user_id = get_current_user_id();
             $cash = get_user_meta($user_id, SWJJ_CASH_OPTION, true);
             if( $total > $cash ) {

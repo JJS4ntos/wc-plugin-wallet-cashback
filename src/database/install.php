@@ -59,16 +59,20 @@ define(
         'wc-jj-cashback-percent' => [
             'type' => 'number',
             'label' => __('Percentual de CashBack por produto', 'wc-sw-jj'),
-            'default' => 0
+            'default' => 0,
+            'placeholder' => __('Digite o percentual', 'wc-sw-jj'),
+            'textHelp' => __('Após cada compra esse determinado percentual retornará ao usuário', 'wc-sw-jj')
         ], 
         'wc-jj-cashback-fixed-value' => [
             'type' => 'number',
             'label' => __('Valor fixo de CashBack por produto', 'wc-sw-jj'),
-            'default' => 0
+            'default' => 0,
+            'placeholder' => __('Digite o valor', 'wc-sw-jj'),
+            'textHelp' => __('Após cada compra esse determinado valor retornará ao usuário', 'wc-sw-jj')
         ], 
         # cash can be expired
         'wc-jj-cash-expire' => [
-            'type' => 'number',
+            'type' => 'checkbox',
             'label' => __('Ativar dinheiro em carteira expirável', 'wc-sw-jj'),
             'default' => 0
         ], 
@@ -76,24 +80,32 @@ define(
         'wc-jj-cash-expire-days' => [
             'type' => 'number',
             'label' => __('Dias até que o dinheiro expire', 'wc-sw-jj'),
-            'default' => 0
+            'default' => 0,
+            'placeholder' => __('Digite o número de dias', 'wc-sw-jj'),
+            'textHelp' => __('Após atingido este limite de dias o crédito será zerado', 'wc-sw-jj')
         ], 
         # cash limit - 0 no limits
         'wc-jj-cash-limit' => [
             'type' => 'number',
             'label' => __('Limite de dinheiro em carteira', 'wc-sw-jj'),
-            'default' => 10.0
+            'default' => 10.0,
+            'placeholder' => __('Digite o valor máximo', 'wc-sw-jj'),
+            'textHelp' => __('Nenhum usuário poderá ter mais créditos em carteira do que isto', 'wc-sw-jj')
         ],
         # limite usage cash only these products
         'wc-jj-products' => [
             'type' => 'select2',
             'label' => __('Produtos que podem ser comprados usando a carteira', 'wc-sw-jj'),
-            'default' => []
+            'default' => [],
+            'placeholder' => __('Selecione os produtos', 'wc-sw-jj'),
+            'textHelp' => __('Os créditos poderão ser utilizados somente nestes produtos ou em categorias selecionadas', 'wc-sw-jj')
         ],
         # limite usage cash only these product categories
         'wc-jj-products-categories' => [
             'type' => 'select2',
             'label' => __('Categoria de produtos que podem ser comprados usando a carteira', 'wc-sw-jj'),
-            'default' => []
+            'default' => [],
+            'placeholder' => __('Selecione as categorias', 'wc-sw-jj'),
+            'textHelp' => __('Os créditos poderão ser utilizados somente nestas categorias ou em produtos selecionados', 'wc-sw-jj')
         ],
     ]);

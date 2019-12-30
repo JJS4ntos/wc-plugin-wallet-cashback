@@ -12,7 +12,7 @@ if ( ! defined( 'WPINC' ) ) {
     die;
 }
 
-define('PLUGIN_NAME', 'Shop Wallet');
+define('PLUGIN_NAME', 'WC Shop Wallet');
 define('SD_PATH', plugin_dir_url( __FILE__ ));
 define('SD_PLUGIN_PATH', plugin_dir_path( __FILE__ ));
 define('URL_SCOPE', 'wc-jj-shop-wallet-api');

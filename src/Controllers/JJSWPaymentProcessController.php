@@ -15,13 +15,14 @@ class JJSWPaymentProcessController extends Controller {
     public function paid( $order_id ) {
         $order = wc_get_order( $order_id );
         $user = $order->get_user();
-        
         $total = $order->get_total();
-        $this->cashback($total, $user->ID);
+        if( $order->get_payment_method() !== 'wc-sw-jj-payment' ) {
+            $this->cashback($total, $user->ID);
+        }
     }
 
     private function cashback($total, $user_id) {
-        $user_cash = doubleval(get_user_meta($user->ID, SWJJ_CASH_OPTION, true));
+        $user_cash = doubleval(get_user_meta($user->ID, SWJJ_CASH_OPTION, true));        
         if( get_option('wc-jj-cashback', false) ) {
             if( get_option('wc-jj-cashback-mode', false) == 'fixed' ) {
                 $fixed_cashback = doubleval(get_option('wc-jj-cashback-value', 0));

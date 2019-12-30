@@ -25,7 +25,7 @@ class Setup extends Controller{
    * @return
    */
   public function page_setup(){
-    add_menu_page( PLUGIN_NAME, PLUGIN_NAME, 'manage_options', sanitize_key(PLUGIN_NAME), array($this, 'admin_page'), $this->icon, 3 );
+    add_menu_page( PLUGIN_NAME, PLUGIN_NAME, 'manage_options', 'wc-jj-sw', array($this, 'admin_page'), $this->icon, 3 );
   }
 
   /**
@@ -55,19 +55,23 @@ class Setup extends Controller{
    * @return
    */
   public function register_assets_admin() {
-    $js_folder = SD_PLUGIN_PATH . '/src/assets/admin/js/';
-    $css_folder = SD_PLUGIN_PATH . '/src/assets/admin/css/';
-    $scripts = scandir($js_folder);
-    //var_dump($scripts);
-    $styles = scandir($css_folder);
-    foreach ($styles as $style) {
-      if( !is_dir($style) ) {
-        wp_enqueue_style( URL_SCOPE . mt_rand(0, 9000), '/wp-content/plugins/'.PLUGIN_ROOT.'/src/assets/admin/css/' . $style);
-      }
-    }
-    foreach ($scripts as $script) {
-      if( !is_dir($script) ) {
-        wp_enqueue_script( URL_SCOPE . mt_rand(0, 9000), '/wp-content/plugins/'.PLUGIN_ROOT.'/src/assets/admin/js/' . $script);
+    if( isset( $_GET['page'] ) ) {
+      if( strpos($_GET['page'], 'wc-jj-sw') !== false || strpos($_GET['page'], 'shopwallet') !== false) {
+        $js_folder = SD_PLUGIN_PATH . '/src/assets/admin/js/';
+        $css_folder = SD_PLUGIN_PATH . '/src/assets/admin/css/';
+        $scripts = scandir($js_folder);
+        //var_dump($scripts);
+        $styles = scandir($css_folder);
+        foreach ($styles as $style) {
+          if( !is_dir($style) ) {
+            wp_enqueue_style( URL_SCOPE . mt_rand(0, 9000), '/wp-content/plugins/'.PLUGIN_ROOT.'/src/assets/admin/css/' . $style);
+          }
+        }
+        foreach ($scripts as $script) {
+          if( !is_dir($script) ) {
+            wp_enqueue_script( URL_SCOPE . mt_rand(0, 9000), '/wp-content/plugins/'.PLUGIN_ROOT.'/src/assets/admin/js/' . $script);
+          }
+        }
       }
     }
   }
@@ -77,7 +81,16 @@ class Setup extends Controller{
    * @return [type] [description]
    */
   public function admin_page() {
-     echo $this->generateView('index', []);
+    $orderby = 'name';
+    $order = 'asc';
+    $hide_empty = false ;
+    $cat_args = array(
+        'orderby'    => $orderby,
+        'order'      => $order,
+        'hide_empty' => $hide_empty,
+    );
+    $product_categories = get_terms( 'product_cat', $cat_args );
+    echo $this->generateView('index', ['options' => SWJJ_OPTIONS, 'categories' => $product_categories]);
   }
 
   /**
